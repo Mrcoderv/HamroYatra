@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle}">Manage Tour Packages - HamroYatra</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .admin-container {
+            display: flex;
+            min-height: calc(100vh - 70px);
+        }
+        .admin-sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 0;
+        }
+        .admin-sidebar .admin-info {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+        .admin-sidebar .admin-info h3 {
+            margin-bottom: 5px;
+        }
+        .admin-sidebar .admin-info p {
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+        .admin-sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .admin-sidebar ul li a {
+            display: block;
+            padding: 12px 20px;
+            color: #ecf0f1;
+            transition: all 0.3s ease;
+        }
+        .admin-sidebar ul li a:hover, .admin-sidebar ul li a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        .admin-sidebar ul li a i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        .admin-content {
+            flex: 1;
+            padding: 30px;
+            background-color: #f8f9fa;
+        }
+        .admin-header {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .admin-header h2 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        .table-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        .package-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .package-table th, .package-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        .package-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        .action-btn {
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            background-color: #e9ecef;
+            color: #495057;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-right: 5px;
+        }
+        .action-btn:hover {
+            background-color: #dee2e6;
+        }
+        .action-btn.edit {
+            background-color: #3498db;
+            color: white;
+        }
+        .action-btn.delete {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .package-image {
+            width: 80px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1><a href="/">HamroYatra</a></h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/destinations">Destinations</a></li>
+                    <li><a href="/packages">Tour Packages</a></li>
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="admin-container">
+        <div class="admin-sidebar">
+            <div class="admin-info">
+                <h3>Admin Panel</h3>
+                <p sec:authentication="name">admin</p>
+            </div>
+            <ul>
+                <li><a href="/admin"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="/admin/users"><i class="fas fa-users"></i> Users</a></li>
+                <li><a href="/admin/destinations"><i class="fas fa-map-marker-alt"></i> Destinations</a></li>
+                <li><a href="/admin/packages" class="active"><i class="fas fa-suitcase"></i> Tour Packages</a></li>
+                <li><a href="/admin/bookings"><i class="fas fa-calendar-check"></i> Bookings</a></li>
+                <li><a href="/dashboard"><i class="fas fa-user"></i> My Account</a></li>
+                <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+        <div class="admin-content">
+            <div class="admin-header">
+                <h2>Manage Tour Packages</h2>
+                <a href="/admin/packages/new" class="btn btn-primary">
+                    <i class="fas fa-plus-circle"></i> Add New Package
+                </a>
+            </div>
+            
+            <div class="table-container">
+                <table class="package-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Destination</th>
+                            <th>Duration</th>
+                            <th>Price</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="package : ${packages}">
+                            <td th:text="${package.id}">1</td>
+                            <td>
+                                <img th:if="${package.imageUrl}" th:src="${package.imageUrl}" alt="Package" class="package-image">
+                                <span th:unless="${package.imageUrl}">No Image</span>
+                            </td>
+                            <td th:text="${package.name}">Kathmandu Explorer</td>
+                            <td th:text="${package.destination != null ? package.destination.name : 'N/A'}">Kathmandu</td>
+                            <td th:text="${package.duration + ' days'}">7 days</td>
+                            <td th:text="${'$' + package.price}">$500</td>
+                            <td>
+                                <a th:href="@{/admin/packages/edit/{id}(id=${package.id})}" class="action-btn edit">Edit</a>
+                                <a th:href="@{/admin/packages/delete/{id}(id=${package.id})}" class="action-btn delete" onclick="return confirm('Are you sure you want to delete this package?')">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

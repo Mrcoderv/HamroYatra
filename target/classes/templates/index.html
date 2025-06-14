@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle}">HamroYatra - Tourist Management</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Include Header Fragment -->
+    <div th:replace="fragments/header :: header"></div>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Discover Nepal's Beauty</h2>
+                <p>Explore the breathtaking landscapes and rich cultural heritage</p>
+                <a href="/packages" class="btn btn-primary">Explore Packages</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="featured-destinations">
+        <div class="container">
+            <h2 class="section-title">Popular Destinations</h2>
+            <div class="destination-grid">
+                <div class="destination-card" th:each="destination : ${popularDestinations}">
+                    <img th:src="${destination.imageUrl}" th:alt="${destination.name}">
+                    <div class="destination-info">
+                        <h3 th:text="${destination.name}">Destination Name</h3>
+                        <p th:text="${destination.description}">Destination description</p>
+                        <a th:href="@{/destinations/{id}(id=${destination.id})}" class="btn btn-secondary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center" style="margin-top: 30px;">
+                <a href="/destinations" class="btn btn-secondary">View All Destinations</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="services">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <div class="service-grid">
+                <div class="service-card">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h3>Tour Planning</h3>
+                    <p>Customized itineraries based on your preferences</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-hotel"></i>
+                    <h3>Accommodation</h3>
+                    <p>Quality hotels and homestays</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-car"></i>
+                    <h3>Transportation</h3>
+                    <p>Comfortable and reliable transport options</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-user-tie"></i>
+                    <h3>Expert Guides</h3>
+                    <p>Knowledgeable local guides</p>
+                </div>
+            </div>
+            <div class="text-center" style="margin-top: 30px;">
+                <a href="/services" class="btn btn-secondary">Learn More About Our Services</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="featured-packages">
+        <div class="container">
+            <h2 class="section-title">Featured Tour Packages</h2>
+            <div class="destination-grid">
+                <div class="destination-card" th:each="package : ${featuredPackages}">
+                    <img th:src="${package.imageUrl}" th:alt="${package.name}">
+                    <div class="destination-info">
+                        <h3 th:text="${package.name}">Package Name</h3>
+                        <p th:text="${package.description}">Package description</p>
+                        <div class="package-meta">
+                            <span><i class="fas fa-calendar"></i> <span th:text="${package.duration} + ' Days'">7 Days</span></span>
+                            <span><i class="fas fa-tag"></i> <span th:text="'$' + ${package.price}">$999</span></span>
+                        </div>
+                        <a th:href="@{/packages/{id}(id=${package.id})}" class="btn btn-secondary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center" style="margin-top: 30px;">
+                <a href="/packages" class="btn btn-secondary">View All Packages</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Travelers Say</h2>
+            <div class="testimonial-slider">
+                <div class="testimonial">
+                    <p>"An amazing experience with HamroYatra. The guides were knowledgeable and the itinerary was perfect!"</p>
+                    <div class="testimonial-author">
+                        <h4>Sarah Johnson</h4>
+                        <p>Trekked to Everest Base Camp</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Start Your Adventure?</h2>
+            <p>Book your dream tour package today!</p>
+            <div class="cta-buttons">
+                <a href="/packages" class="btn btn-primary">Browse Packages</a>
+                <a href="/contact" class="btn btn-secondary">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Include Footer Fragment -->
+    <div th:replace="fragments/footer :: footer"></div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

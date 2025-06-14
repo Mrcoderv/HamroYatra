@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - HamroYatra</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .dashboard-container {
+            display: flex;
+            min-height: calc(100vh - 70px);
+        }
+        .dashboard-sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 0;
+        }
+        .dashboard-sidebar .user-info {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+        .dashboard-sidebar .user-info h3 {
+            margin-bottom: 5px;
+        }
+        .dashboard-sidebar .user-info p {
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+        .dashboard-sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .dashboard-sidebar ul li a {
+            display: block;
+            padding: 12px 20px;
+            color: #ecf0f1;
+            transition: all 0.3s ease;
+        }
+        .dashboard-sidebar ul li a:hover, .dashboard-sidebar ul li a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        .dashboard-sidebar ul li a i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        .dashboard-content {
+            flex: 1;
+            padding: 30px;
+            background-color: #f8f9fa;
+        }
+        .dashboard-header {
+            margin-bottom: 30px;
+        }
+        .dashboard-header h2 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        .profile-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: #6c757d;
+            margin-right: 20px;
+        }
+        .profile-name h3 {
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+        .profile-name p {
+            color: #6c757d;
+        }
+        .profile-details {
+            margin-bottom: 30px;
+        }
+        .profile-details h4 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .detail-row {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        .detail-label {
+            width: 150px;
+            font-weight: 600;
+            color: #495057;
+        }
+        .detail-value {
+            flex: 1;
+            color: #6c757d;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .alert {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1><a href="/">HamroYatra</a></h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/destinations">Destinations</a></li>
+                    <li><a href="/packages">Tour Packages</a></li>
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <div class="dashboard-sidebar">
+            <div class="user-info">
+                <h3 th:text="${user.fullName}">John Doe</h3>
+                <p th:text="${user.email}">john@example.com</p>
+            </div>
+            <ul>
+                <li><a href="/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="/dashboard/bookings"><i class="fas fa-calendar-check"></i> My Bookings</a></li>
+                <li><a href="/dashboard/profile" class="active"><i class="fas fa-user"></i> My Profile</a></li>
+                <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+        <div class="dashboard-content">
+            <div class="dashboard-header">
+                <h2>My Profile</h2>
+                <p>View and update your personal information.</p>
+            </div>
+            
+            <div class="profile-container">
+                <div th:if="${param.updated}" class="alert alert-success">
+                    Your profile has been updated successfully.
+                </div>
+                
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="profile-name">
+                        <h3 th:text="${user.fullName}">John Doe</h3>
+                        <p th:text="${user.username}">johndoe</p>
+                    </div>
+                </div>
+                
+                <div class="profile-details">
+                    <h4>Personal Information</h4>
+                    <div class="detail-row">
+                        <div class="detail-label">Full Name</div>
+                        <div class="detail-value" th:text="${user.fullName}">John Doe</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Email</div>
+                        <div class="detail-value" th:text="${user.email}">john@example.com</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Phone</div>
+                        <div class="detail-value" th:text="${user.phone != null ? user.phone : 'Not provided'}">+977 9876543210</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Username</div>
+                        <div class="detail-value" th:text="${user.username}">johndoe</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Account Type</div>
+                        <div class="detail-value">
+                            <span th:if="${user.hasRole('ADMIN')}">Administrator</span>
+                            <span th:unless="${user.hasRole('ADMIN')}">Regular User</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="profile-details">
+                    <h4>Update Profile</h4>
+                    <form th:action="@{/dashboard/profile/update}" method="post" th:object="${user}">
+                        <div class="form-group">
+                            <label for="fullName">Full Name</label>
+                            <input type="text" id="fullName" name="fullName" class="form-control" th:value="${user.fullName}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" class="form-control" th:value="${user.email}" required readonly>
+                            <small class="text-muted">Email cannot be changed.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="text" id="phone" name="phone" class="form-control" th:value="${user.phone}">
+                        </div>
+                        <div class="form-group">
+                            <label for="currentPassword">Current Password</label>
+                            <input type="password" id="currentPassword" name="currentPassword" class="form-control">
+                            <small class="text-muted">Required only if you want to change your password.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword">New Password</label>
+                            <input type="password" id="newPassword" name="newPassword" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm New Password</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Profile</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

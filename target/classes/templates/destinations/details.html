@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle}">Destination Details - HamroYatra</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .destination-header {
+            padding: 80px 0;
+            background-size: cover;
+            background-position: center;
+            color: white;
+            position: relative;
+        }
+        .destination-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .destination-header-content {
+            position: relative;
+            z-index: 1;
+        }
+        .destination-header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        .destination-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 20px;
+        }
+        .destination-info-section {
+            padding: 80px 0;
+        }
+        .destination-info-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+        .destination-description {
+            line-height: 1.7;
+        }
+        .destination-description p {
+            margin-bottom: 20px;
+        }
+        .destination-highlights {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        .destination-highlights h3 {
+            margin-bottom: 20px;
+            color: var(--dark-color);
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .highlights-list {
+            list-style: none;
+            padding: 0;
+        }
+        .highlights-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f5f5f5;
+            display: flex;
+            align-items: center;
+        }
+        .highlights-list li:last-child {
+            border-bottom: none;
+        }
+        .highlights-list li i {
+            color: var(--primary-color);
+            margin-right: 10px;
+        }
+        .packages-section {
+            padding: 80px 0;
+            background-color: #f8f9fa;
+        }
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .package-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        .package-card:hover {
+            transform: translateY(-10px);
+        }
+        .package-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .package-info {
+            padding: 20px;
+        }
+        .package-info h3 {
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        .package-info p {
+            margin-bottom: 15px;
+            color: var(--gray-color);
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .package-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: var(--gray-color);
+        }
+        @media (max-width: 768px) {
+            .destination-info-grid {
+                grid-template-columns: 1fr;
+            }
+            .destination-header h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Include Header Fragment -->
+    <div th:replace="fragments/header :: header"></div>
+
+    <header class="destination-header" th:style="'background-image: url(' + ${destination.imageUrl} + ');'">
+        <div class="container">
+            <div class="destination-header-content text-center">
+                <h1 th:text="${destination.name}">Destination Name</h1>
+                <p th:text="${destination.description}">Destination description goes here...</p>
+                <p><i class="fas fa-map-marker-alt"></i> <span th:text="${destination.location}">Location</span></p>
+            </div>
+        </div>
+    </header>
+
+    <section class="destination-info-section">
+        <div class="container">
+            <div class="destination-info-grid">
+                <div class="destination-description">
+                    <h2>About <span th:text="${destination.name}">Destination</span></h2>
+                    <p th:text="${destination.description}">Detailed description about the destination goes here...</p>
+                    <p>Nepal is a country of amazing extremes. On the one hand, you have the highest mountains in the world, including Mount Everest, the highest of them all. On the other hand, you have the lowland jungle plains of the Terai, home to some of the most unique wildlife on the planet, including the Bengal tiger and the one-horned rhinoceros.</p>
+                    <p>The cultural diversity of Nepal is equally extreme. The country is home to more than 100 different ethnic groups, each with their own language, culture, and traditions. The result is a rich tapestry of cultural experiences that will leave you spellbound.</p>
+                </div>
+                <div class="destination-highlights">
+                    <h3>Highlights</h3>
+                    <ul class="highlights-list" th:if="${destination.highlights != null}">
+                        <li th:each="highlight : ${#strings.arraySplit(destination.highlights, ',')}">
+                            <i class="fas fa-check-circle"></i> <span th:text="${highlight}">Highlight</span>
+                        </li>
+                    </ul>
+                    <ul class="highlights-list" th:if="${destination.highlights == null}">
+                        <li><i class="fas fa-check-circle"></i> Beautiful landscapes</li>
+                        <li><i class="fas fa-check-circle"></i> Rich cultural heritage</li>
+                        <li><i class="fas fa-check-circle"></i> Friendly locals</li>
+                        <li><i class="fas fa-check-circle"></i> Delicious cuisine</li>
+                        <li><i class="fas fa-check-circle"></i> Adventure activities</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="packages-section">
+        <div class="container">
+            <h2 class="section-title">Tour Packages for <span th:text="${destination.name}">Destination</span></h2>
+            <p class="text-center" style="margin-bottom: 30px;">Choose from our selection of carefully crafted tour packages</p>
+            
+            <div th:if="${tourPackages.empty}" class="text-center">
+                <p>No tour packages available for this destination at the moment.</p>
+                <a href="/packages" class="btn btn-primary">Browse All Packages</a>
+            </div>
+            
+            <div th:unless="${tourPackages.empty}" class="packages-grid">
+                <div class="package-card" th:each="package : ${tourPackages}">
+                    <img th:src="${package.imageUrl}" th:alt="${package.name}">
+                    <div class="package-info">
+                        <h3 th:text="${package.name}">Package Name</h3>
+                        <div class="package-meta">
+                            <span><i class="fas fa-calendar"></i> <span th:text="${package.duration} + ' Days'">7 Days</span></span>
+                            <span><i class="fas fa-tag"></i> <span th:text="'$' + ${package.price}">$999</span></span>
+                        </div>
+                        <p th:text="${package.description}">Package description goes here...</p>
+                        <a th:href="@{/packages/{id}(id=${package.id})}" class="btn btn-secondary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Include Footer Fragment -->
+    <div th:replace="fragments/footer :: footer"></div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>
