@@ -99,6 +99,20 @@ src/
 
 [MIT](LICENSE)
 
+## View Pages
+
+Below are screenshots of the application views:
+
+<p align="center">
+  <img src="tests/1.png" alt="View 1" width="400"/>
+  <img src="tests/2.png" alt="View 2" width="400"/>
+  <img src="tests/3.png" alt="View 3" width="400"/>
+  <img src="tests/4.png" alt="View 4" width="400"/>
+  <img src="tests/5.png" alt="View 5" width="400"/>
+  <img src="tests/6.png" alt="View 6" width="400"/>
+  <img src="tests/7.png" alt="View 7" width="400"/>
+</p>
+
 ---
 
 For more details, see the code or open an issue!
