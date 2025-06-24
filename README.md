@@ -73,10 +73,11 @@ src/
    ```sh
    pnpm dev
    ```
-   - Visit [http://localhost:3000](http://localhost:3000)
+   - Visit [http://localhost:8080](http://localhost:3000)
 
 ### Admin Access
-
+ 
+- `/admin/login` for login
 - Admin dashboard: `/admin`
 - Default admin credentials: _Set up via database or registration (see code for details)_
 
