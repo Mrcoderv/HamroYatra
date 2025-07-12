@@ -440,3 +440,179 @@ img {
     font-size: 2rem;
   }
 }
+
+/* Add these styles at the end of the existing styles.css file */
+
+/* Booking List and View Styles */
+.booking-container {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+}
+
+/* Admin Sidebar Styles */
+.admin-sidebar .list-group-item {
+  border: none;
+  padding: 12px 20px;
+  margin-bottom: 5px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.admin-sidebar .list-group-item:hover {
+  background-color: rgba(231, 76, 60, 0.1);
+  color: var(--primary-color);
+}
+
+.admin-sidebar .list-group-item.active {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+/* Booking Tables */
+.table-container {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.booking-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.booking-table th {
+  background-color: #f8f9fa;
+  padding: 12px;
+  font-weight: 600;
+  color: var(--dark-color);
+  border-bottom: 2px solid #dee2e6;
+}
+
+.booking-table td {
+  padding: 12px;
+  vertical-align: middle;
+  border-bottom: 1px solid #dee2e6;
+}
+
+/* Status Badges */
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.status-badge.confirmed {
+  background-color: var(--success-color);
+  color: white;
+}
+
+.status-badge.pending {
+  background-color: var(--warning-color);
+  color: #000;
+}
+
+.status-badge.cancelled {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+/* Booking Details Card */
+.booking-details-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+.booking-details-header {
+  padding: 20px;
+  border-bottom: 1px solid #dee2e6;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 10px 10px 0 0;
+}
+
+.booking-details-body {
+  padding: 20px;
+}
+
+.booking-info-section {
+  margin-bottom: 30px;
+}
+
+.booking-info-section h6 {
+  color: var(--dark-color);
+  font-weight: 600;
+  margin-bottom: 15px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--primary-color);
+}
+
+/* Action Buttons */
+.booking-actions {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #dee2e6;
+}
+
+.action-btn {
+  padding: 8px 16px;
+  border-radius: 5px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.action-btn i {
+  margin-right: 8px;
+}
+
+/* DataTables Customization */
+.dataTables_wrapper .dataTables_length select {
+  padding: 6px 30px 6px 12px;
+  border-radius: 5px;
+  border: 1px solid #dee2e6;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+  padding: 6px 12px;
+  border-radius: 5px;
+  border: 1px solid #dee2e6;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  padding: 6px 12px;
+  margin: 0 3px;
+  border-radius: 5px;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white !important;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .booking-info-section {
+    margin-bottom: 20px;
+  }
+
+  .table-container {
+    padding: 10px;
+  }
+
+  .booking-table th,
+  .booking-table td {
+    padding: 8px;
+  }
+
+  .action-btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
