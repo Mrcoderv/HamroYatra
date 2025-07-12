@@ -6,7 +6,99 @@
     <title th:text="${pageTitle}">Photo Gallery - HamroYatra</title>
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        // Slideshow functionality
+        let slideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const prev = document.querySelector('.prev');
+        const next = document.querySelector('.next');
+
+        function showSlides(n) {
+            if (slides.length === 0) return;
+            slides.forEach(s => s.style.display = 'none');
+            slideIndex = (n + slides.length) % slides.length;
+            slides[slideIndex].style.display = 'block';
+        }
+
+        function nextSlide() {
+            showSlides(slideIndex + 1);
+        }
+
+        function prevSlide() {
+            showSlides(slideIndex - 1);
+        }
+
+        prev && prev.addEventListener('click', prevSlide);
+        next && next.addEventListener('click', nextSlide);
+
+        // Auto slideshow
+        setInterval(() => {
+            nextSlide();
+        }, 3500);
+
+        showSlides(slideIndex);
+    </script>
     <style>
+        .slideshow-container {
+            position: relative;
+            max-width: 100%;
+            margin: auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .slide {
+            display: none;
+            position: relative;
+        }
+        .slide img {
+            width: 100%;
+            vertical-align: middle;
+        }
+        .caption {
+            color: #fff;
+            font-size: 1.2rem;
+            padding: 12px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.5);
+            text-align: center;
+        }
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+            transition: 0.3s;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            background: rgba(0,0,0,0.3);
+        }
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+        .prev {
+            left: 0;
+        }
+        .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.6);
+        }
+        .fade {
+            animation-name: fade;
+            animation-duration: 1s;
+        }
+        @keyframes fade {
+            from {opacity: .4}
+            to {opacity: 1}
+        }
         .gallery-section {
             padding: 80px 0;
         }
@@ -118,6 +210,23 @@
 
     <section class="gallery-section">
         <div class="container">
+            <div class="slideshow-container" style="margin-bottom:40px;">
+                <div class="slide fade">
+                    <img src="/images/gallery/everest.jpg" style="width:100%;height:350px;object-fit:cover;" alt="Mount Everest">
+                    <div class="caption">Mount Everest</div>
+                </div>
+                <div class="slide fade">
+                    <img src="/images/gallery/annapurna.jpg" style="width:100%;height:350px;object-fit:cover;" alt="Annapurna Range">
+                    <div class="caption">Annapurna Range</div>
+                </div>
+                <div class="slide fade">
+                    <img src="/images/gallery/durbar-square.jpg" style="width:100%;height:350px;object-fit:cover;" alt="Kathmandu Durbar Square">
+                    <div class="caption">Kathmandu Durbar Square</div>
+                </div>
+                <a class="prev">&#10094;</a>
+                <a class="next">&#10095;</a>
+            </div>
+            <!-- Slideshow End -->
             <h2 class="section-title">Photo Gallery</h2>
             <p class="text-center" style="margin-bottom: 30px;">Explore the beauty of Nepal through our collection of stunning photographs.</p>
             
