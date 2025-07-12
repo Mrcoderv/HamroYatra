@@ -130,6 +130,14 @@
                 <p>HamroYatra is a premier travel agency based in Nepal, dedicated to providing exceptional travel experiences that showcase the beauty and culture of our country. Founded in 2025, we have been helping travelers from around the world discover the wonders of Nepal for over a decade.</p>
                 <p>Our team consists of experienced travel professionals who are passionate about Nepal and committed to delivering personalized service to every client. We specialize in trekking adventures, cultural tours, wildlife safaris, and custom itineraries tailored to your interests and preferences.</p>
                 <p>At Hamro Yatra, we believe in responsible tourism that benefits local communities and preserves the natural environment. We work closely with local guides, accommodations, and service providers to ensure that your travel experience is not only memorable but also sustainable.</p>
+
+                <!-- Added duplicate content for seamless looping -->
+                <div class="looping-content">
+                    <h2>About HamroYatra</h2>
+                    <p>HamroYatra is a premier travel agency based in Nepal, dedicated to providing exceptional travel experiences that showcase the beauty and culture of our country. Founded in 2025, we have been helping travelers from around the world discover the wonders of Nepal for over a decade.</p>
+                    <p>Our team consists of experienced travel professionals who are passionate about Nepal and committed to delivering personalized service to every client. We specialize in trekking adventures, cultural tours, wildlife safaris, and custom itineraries tailored to your interests and preferences.</p>
+                    <p>At Hamro Yatra, we believe in responsible tourism that benefits local communities and preserves the natural environment. We work closely with local guides, accommodations, and service providers to ensure that your travel experience is not only memorable but also sustainable.</p>
+                </div>
             </div>
         </div>
         <div class="about-image">
@@ -146,14 +154,14 @@
         background: #000;
         color: #fff;
         padding: 4rem 0;
+        height: 100vh; /* Fixed height for better looping */
     }
 
     .about-content {
         position: relative;
         z-index: 2;
-        opacity: 0;
-        transform: translateY(50px);
-        transition: all 1.5s ease-out;
+        opacity: 1;
+        height: 100%;
     }
 
     .about-text {
@@ -161,6 +169,14 @@
         padding: 2rem;
         border-radius: 8px;
         box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        position: relative;
+        animation: scroll-up 30s linear infinite;
+    }
+
+    .looping-content {
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px dashed rgba(255, 255, 255, 0.3);
     }
 
     .about-image {
@@ -192,60 +208,62 @@
         z-index: 3;
     }
 
-    /* Scroll-up credits effect */
+    /* Infinite scroll-up credits effect */
     @keyframes scroll-up {
         0% {
-            transform: translateY(100%);
-            opacity: 0;
-        }
-        10% {
-            opacity: 1;
-        }
-        90% {
-            opacity: 1;
+            transform: translateY(0);
         }
         100% {
-            transform: translateY(-100%);
-            opacity: 0;
+            transform: translateY(-50%);
         }
     }
 
-    /* When section is in view */
-    .about-section.animate-in .about-content {
-        opacity: 1;
-        transform: translateY(0);
+    /* Flicker effect for more film-like feel */
+    @keyframes film-flicker {
+        0%, 100% { opacity: 0.95; }
+        2% { opacity: 0.9; }
+        4% { opacity: 0.85; }
+        8% { opacity: 0.9; }
+        22% { opacity: 0.95; }
+        28% { opacity: 0.98; }
+        32% { opacity: 0.9; }
+        40% { opacity: 0.95; }
+        75% { opacity: 0.98; }
+    }
+
+    .about-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.03);
+        animation: film-flicker 8s infinite;
+        z-index: 4;
+        pointer-events: none;
     }
 </style>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const aboutSection = document.querySelector('.about-section');
-
-        // Check if section is in viewport
-        function isInViewport(element) {
-            const rect = element.getBoundingClientRect();
-            return (
-                rect.top <= (window.innerHeight || document.documentElement.clientHeight) / 1.5
-            );
-        }
-
-        // Add animation when section comes into view
-        function checkScroll() {
-            if (isInViewport(aboutSection)) {
-                aboutSection.classList.add('animate-in');
-                window.removeEventListener('scroll', checkScroll);
-            }
-        }
-
-        // Initial check
-        checkScroll();
-
-        // Listen for scroll events
-        window.addEventListener('scroll', checkScroll);
-
-        // Add film ending credits effect
+        // Adjust animation speed based on content height
         const aboutText = document.querySelector('.about-text');
-        aboutText.style.animation = 'scroll-up 30s linear forwards';
+        const contentHeight = aboutText.scrollHeight;
+        const viewportHeight = window.innerHeight;
+
+        // Calculate duration based on content length (faster for longer content)
+        const duration = Math.max(20, contentHeight / 50);
+        aboutText.style.animationDuration = `${duration}s`;
+
+        // Add mouse control for pausing
+        aboutText.addEventListener('mouseenter', function() {
+            this.style.animationPlayState = 'paused';
+        });
+
+        aboutText.addEventListener('mouseleave', function() {
+            this.style.animationPlayState = 'running';
+        });
     });
 </script>
 
