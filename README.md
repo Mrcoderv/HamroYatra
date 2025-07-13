@@ -23,18 +23,17 @@ HamroYatra is a comprehensive travel and tour management platform for exploring 
 ```
 src/
 ├── main/
-│   ├── java/
-│   │   └── com/hamroyatra/
-│   │       ├── config/       // Security & DB config
-│   │       ├── controller/   // MVC Controllers
-│   │       ├── model/        // JPA Entities
-│   │       ├── repository/   // Spring Data interfaces
-│   │       └── HamroYatraApplication.java
-│   └── resources/
-│       ├── static/          // CSS/JS assets
-│       ├── templates/       // Thymeleaf HTML
-│       └── application.properties
-└── test/                    // Test cases
+    ├── java/
+    │   └── com/hamroyatra/
+    │       ├── config/       // Security & DB config
+    │       ├── controller/   // MVC Controllers
+    │       ├── model/        // JPA Entities
+    │       ├── repository/   // Spring Data interfaces
+    │       └── HamroYatraApplication.java
+    └── resources/
+      ├── static/          // CSS/JS assets
+      ├── templates/       // Thymeleaf HTML
+      └── application.properties
 ```
 
 ## Getting Started
